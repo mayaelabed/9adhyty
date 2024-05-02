@@ -2,15 +2,29 @@ const User = require("../models/User");
 const blacklistTokenModel = require("../models/blacklistTokenModel");
 const {hashPassword, verifyPassword, generateToken} = require("../tools/authTool");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+
+
+// Configure multer for file upload the logic goes here for the file upload
+const storage = multer.diskStorage({
+    destination: "./uploads",
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+      cb(null, file.fieldname + "_" + uniqueSuffix + "_" + file.originalname);
+    },
+  });
+const upload = multer({ storage }).single("image");
+
 
 const register = async (req,res,next)=>{
     try{
         
-        const {fullname,email,password} = req.body;
+        const {fullname,email,password,image} = req.body;
         const user = await User.create({
             fullname,
             email,
-            password: hashPassword(password)
+            password: hashPassword(password),
+            image: req.file.filename
         });
 
         if(user){
@@ -73,5 +87,6 @@ const logout = async (req,res,next)=>{
 module.exports = {
     register,
     login,
-    logout
+    logout,
+    upload
 }

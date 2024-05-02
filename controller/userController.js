@@ -1,6 +1,39 @@
 const User = require("../models/User");
 const { hashPassword }  = require("../tools/authTool");
+const multer = require("multer");
 
+// Configure multer for file upload the logic goes here for the file upload
+const storage = multer.diskStorage({
+    destination: "./uploads",
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+      cb(null, file.fieldname + "_" + uniqueSuffix + "_" + file.originalname);
+    },
+  });
+const upload = multer({ storage }).single("image");
+
+const create = async (req,res,next)=>{
+    try{
+        
+        const {fullname,email,password,image} = req.body;
+        const user = await User.create({
+            fullname,
+            email,
+            password: hashPassword(password),
+            image: req.file.filename
+        });
+
+        
+
+        if(user){
+            return res.status(201).send("User Register Successfully");
+        }
+
+        return res.status(406).send("Something Worng !!");
+    }catch(err){
+        next(err);
+    }
+}
 
 //get all
 const getAllUser = async (req,res,next)=>{
@@ -27,7 +60,9 @@ const updateUser = async (req,res,next)=>{
         $set:{
             fullname: req.body.fullname,
             email: req.body.email,
-            password: hashPassword(req.body.password)
+            password: hashPassword(req.body.password),
+            image: req.file.filename,
+            role: req.body.role
         }
     });
 
@@ -74,4 +109,4 @@ const getUserById = async (req,res,next)=>{
 }
 
 
-module.exports = {getAllUser,updateUser,deleteUser,getUserById};
+module.exports = {create,getAllUser,updateUser,deleteUser,getUserById,upload};

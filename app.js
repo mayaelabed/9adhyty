@@ -4,6 +4,8 @@ require("dotenv").config();
 const cors = require("cors");
 const authRoutes = require('./routes/authRoutes');
 const userRouter = require('./routes/userRoutes');
+const productRouter = require('./routes/productRoutes');
+const categoryRouter = require('./routes/categoryRoutes');
 const mongoose = require('mongoose')
 const MONGODB_URI = process.env.MONGODB_URI
 const PORT = process.env.PORT || 3001
@@ -17,6 +19,8 @@ app.use(cors({
 app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/user',userRouter);
+app.use('/product',productRouter);
+app.use('/category',categoryRouter);
 
 //error handling middleware
 app.use((err,req,res,next)=>{
