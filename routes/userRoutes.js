@@ -7,8 +7,8 @@ const {checkAuth, authorizeAdmin, authorizeUser} = require("../middleware/authMi
 
 
 userRouter.get("/all",checkAuth,authorizeAdmin,userController.getAllUser);
-userRouter.post("/create",checkAuth,authorizeAdmin,userController.upload,userController.create);
-userRouter.put("/:id",checkAuth, authorizeUser,userController.upload,userController.updateUser);
+userRouter.post("/create",checkAuth,authorizeAdmin,userController.create);
+userRouter.put("/:id",checkAuth, authorizeUser,userController.updateUser);
 userRouter.delete("/:id",checkAuth, authorizeUser,userController.deleteUser);
 userRouter.get("/:id",checkAuth,authorizeUser,userController.getUserById);
 
