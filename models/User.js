@@ -21,9 +21,6 @@ const UserSchema = new mongoose.Schema(
             select: true,
             max: 25,
         },
-        image:{
-            type: String,
-        },
         role: { type: String, default: "USER_ROLE" },
     },
     

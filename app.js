@@ -7,6 +7,8 @@ const userRouter = require('./routes/userRoutes');
 const productRouter = require('./routes/productRoutes');
 const categoryRouter = require('./routes/categoryRoutes');
 const mongoose = require('mongoose')
+const order = require('./routes/order');
+
 const MONGODB_URI = process.env.MONGODB_URI
 const PORT = process.env.PORT || 3001
 const DATABASE_NAME = process.env.DATABASE_NAME;
@@ -21,7 +23,7 @@ app.use('/auth', authRoutes);
 app.use('/user',userRouter);
 app.use('/product',productRouter);
 app.use('/category',categoryRouter);
-
+app.use('/order',order);
 //error handling middleware
 app.use((err,req,res,next)=>{
     const statusCode = err.statusCode || 500;
