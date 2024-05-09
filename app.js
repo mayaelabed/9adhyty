@@ -16,7 +16,11 @@ const DATABASE_NAME = process.env.DATABASE_NAME;
 
 app.use(cors({
     origin: "http://localhost:4200",
-  }));
+}));
+
+// Serve static files from the 'upload' folder
+app.use('/uploads', express.static('./uploads'));
+
 
 app.use(express.json());
 app.use('/auth', authRoutes);

@@ -52,7 +52,7 @@ const updateProductModel = async (req,res,next)=>{
             description:req.body.description,
             quantity:req.body.quantity,
             price:req.body.price,         
-            image: req.file.filename
+            //image: req.file.filename
         }
     });
 
@@ -70,7 +70,6 @@ const updateProductModel = async (req,res,next)=>{
 const deleteProductModel = async (req,res,next)=>{
     try{
     const deleteProductModel = await ProductModel.findByIdAndDelete({_id:req.params.id});
-
     if(deleteProductModel){
         return res.status(200).send("ProductModel Deleted Successfully");
     }
