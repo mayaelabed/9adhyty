@@ -8,26 +8,32 @@ const productRouter = require('./routes/productRoutes');
 const categoryRouter = require('./routes/categoryRoutes');
 const mongoose = require('mongoose')
 const order = require('./routes/order');
+const statisticsRouter = require("./routes/statisticsRoutes");
 
+//.env confg
 const MONGODB_URI = process.env.MONGODB_URI
 const PORT = process.env.PORT || 3001
 const DATABASE_NAME = process.env.DATABASE_NAME;
 
-
+//cors to communicate back with front
 app.use(cors({
     origin: "http://localhost:4200",
 }));
 
-// Serve static files from the 'upload' folder
+// Serve static files from the 'uploads' folder
 app.use('/uploads', express.static('./uploads'));
 
 
+//Routes
 app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/user',userRouter);
 app.use('/product',productRouter);
 app.use('/category',categoryRouter);
 app.use('/order',order);
+app.use('/statistics',statisticsRouter);
+
+
 //error handling middleware
 app.use((err,req,res,next)=>{
     const statusCode = err.statusCode || 500;
@@ -40,6 +46,8 @@ app.use((err,req,res,next)=>{
     });
 });
 
+
+//run the server and connect to DB
 mongoose.connect(MONGODB_URI+DATABASE_NAME).then(()=> {
     console.log('connected to the database')
     app.listen(PORT,()=>{
