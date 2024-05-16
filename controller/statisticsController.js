@@ -1,6 +1,9 @@
 const User = require("../models/User");
 const ProductModel = require("../models/ProductModel");
 const Category = require("../models/categoryModel");
+const Order = require("../models/Order");
+const Cart = require("../models/Cart");
+
 
 //number of user in database
 const numberUser = async (req,res,next)=>{
@@ -40,8 +43,37 @@ const numberCategory = async(req,res,next)=>{
 
 }
 
+//number of order in the database
+const numberOrder = async(req,res,next)=>{
+    try{
+    const allOrder = await Order.countDocuments();
+
+    return res.json({numberOrder: allOrder});
+
+    }catch(err){
+        next(err);
+    }
+
+}
+
+//number of cart in the database
+const numberCart = async(req,res,next)=>{
+    try{
+    const allCart = await Cart.countDocuments();
+
+    return res.json({numberCart: allCart});
+
+    }catch(err){
+        next(err);
+    }
+
+}
+
+
 module.exports = {
     numberUser,
     numberProduct,
-    numberCategory
+    numberCategory,
+    numberOrder,
+    numberCart
 }
