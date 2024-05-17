@@ -38,6 +38,22 @@ const makeOrder = async (req, res, next) => {
     }
 }
 
+
+const allOrder = async (req,res,next)=>{
+    try{
+    const orders = await Order.find();
+    
+    if(orders.length >0){
+        return res.status(200).send(orders);
+    }
+
+    return res.status(404).send("orders Not Found");
+}catch(err){
+    next(err);
+}
+}
+
 module.exports = {
-    makeOrder
+    makeOrder,
+    allOrder
 }

@@ -4,7 +4,7 @@ const productController = require("../controller/productController");
 const fileStorage = require("../tools/fileStorage");
 const {checkAuth, authorizeAdmin, authorizeUser} = require("../middleware/authMiddleware");
 
-productRouter.get("/all",checkAuth,authorizeAdmin,productController.getAllProductModel);
+productRouter.get("/all",productController.getAllProductModel);
 productRouter.post("/create",checkAuth,authorizeAdmin,fileStorage.upload,productController.create);
 productRouter.put("/update/:id",checkAuth,authorizeAdmin,fileStorage.upload,productController.updateProductModel);
 productRouter.delete("/delete/:id",checkAuth,authorizeAdmin,productController.deleteProductModel);

@@ -19,6 +19,7 @@ const DATABASE_NAME = process.env.DATABASE_NAME;
 //cors to communicate back with front
 app.use(cors({
     origin: "http://localhost:4200",
+    credentials: true   
 }));
 
 // Serve static files from the 'uploads' folder
